@@ -1,7 +1,7 @@
 import numpy as np
 
 class MathErrors:
-    TypeInvalid = TypeError("Invalid type for operation")
+    type_invalid = TypeError("Invalid type for operation")
 
 class MathFunc(object):
     def __init__(self, func=None):
@@ -19,7 +19,7 @@ class MathFunc(object):
         elif type(s) == int or type(s) == float:
             return MathFunc(lambda x: self.func(x) + s)
         else:
-            raise MathErrors.TypeInvalid
+            raise MathErrors.type_invalid
 
     def __radd__(self, s):
         return self.__add__(s)
@@ -27,10 +27,10 @@ class MathFunc(object):
     def __sub__(self, s):
         if type(s) == type(self):
             return MathFunc(lambda x: self.func(x) - s.func(x))
-        elif type(s) == int or type(s) == float:
+        elif isinstance(s, int) or isinstance(s, float):
             return MathFunc(lambda x: self.func(x) - s)
         else:
-            raise MathErrors.TypeInvalid
+            raise MathErrors.type_invalid
 
     def __rsub__(self, s):
         if type(s) == type(self):
@@ -38,7 +38,7 @@ class MathFunc(object):
         elif type(s) == int or type(s) == float:
             return MathFunc(lambda x:s- self.func(x))
         else:
-            raise MathErrors.TypeInvalid
+            raise MathErrors.type_invalid
 
     def __mul__(self, s):
         if type(s) == type(self):
@@ -46,7 +46,7 @@ class MathFunc(object):
         elif type(s) == int or type(s) == float:
             return MathFunc(lambda x: self.func(x) * s)
         else:
-            raise MathErrors.TypeInvalid
+            raise MathErrors.type_invalid
     
     def __rmul__(self, s):
         return self.__mul__(s)
@@ -57,7 +57,7 @@ class MathFunc(object):
         elif type(s) == int or type(s) == float:
             return MathFunc(lambda x: self.func(x) / s)
         else:
-            raise MathErrors.TypeInvalid
+            raise MathErrors.type_invalid
 
     def __pow__(self, s):
         if type(s) == type(self):
@@ -65,7 +65,7 @@ class MathFunc(object):
         elif type(s) == int or type(s) == float:
             return MathFunc(lambda x: self.func(x) ** s)
         else:
-            raise MathErrors.TypeInvalid
+            raise MathErrors.type_invalid
 
     def __rtruediv__(self, s):
         if type(s) == type(self):
@@ -73,7 +73,7 @@ class MathFunc(object):
         elif type(s) == int or type(s) == float:
             return MathFunc(lambda x: s / self.func(x))
         else:
-            raise MathErrors.TypeInvalid
+            raise MathErrors.type_invalid
 
     def __rpow__(self, s):
         if type(s) == type(self):
@@ -81,7 +81,7 @@ class MathFunc(object):
         elif type(s) == int or type(s) == float:
             return MathFunc(lambda x: s ** self.func(x))
         else:
-            raise MathErrors.TypeInvalid
+            raise MathErrors.type_invalid
 
     def __abs__(self):
         return MathFunc(lambda x: abs(self.func(x)))
@@ -93,7 +93,7 @@ class MathFunc(object):
         return lambda x: self.func(x) 
     
     def __str__(self):
-        return self.str
+        return str(self.func)
 
 class ParametricFunc(MathFunc):
     def __init__(self, x_fun, y_fun):
